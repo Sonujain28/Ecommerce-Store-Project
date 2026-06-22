@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% load custom_filters %}
+{% load static %}
+{% block content %}
+<div class="mb-6">
+    <a href="{% url 'home' %}"
+       class="inline-flex items-center gap-2 bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded-lg transition">
+        ← Back to Home
+    </a>
+</div>
+
+<div style="max-width: 800px; margin: auto; padding: 40px 20px;">
+    <div style="background: #fff; padding: 20px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+        <h1 style="font-size: 28px; font-weight: bold; margin-bottom: 20px;">🛒 Your Cart</h1>
+
+        {% if cart_items %}
+            <table style="width:100%; border-collapse: collapse;">
+                <thead>
+                    <tr style="border-bottom:1px solid #ddd;">
+                        <th style="text-align:left; padding:10px;">Product</th>
+                        <th style="text-align:center; padding:10px;">Price</th>
+                        <th style="text-align:center; padding:10px;">Quantity</th>
+                        <th style="text-align:center; padding:10px;">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in cart_items %}
+                    <tr style="border-bottom:1px solid #eee;">
+    <td style="padding:10px;">{{ item.product.name }}</td>
+    <td style="text-align:center;">₹{{ item.product.price }}</td>
+    <td>
+        <div class="flex items-center gap-2">
+            <a href="{% url 'decrease_quantity' item.product.id %}" class="bg-gray-300 px-2 rounded">−</a>
+            <span class="px-3">{{ item.quantity }}</span>
+            <a href="{% url 'increase_quantity' item.product.id %}" class="bg-gray-300 px-2 rounded">+</a>
+        </div>
+    </td>
+    <td style="text-align:center;">₹{{ item.product.price|multiply:item.quantity }}</td>
+    <!-- New Trash Icon -->
+    <td style="text-align:center;">
+        <a href="{% url 'remove_from_cart' item.product.id %}"
+           onclick="return confirm('Are you sure you want to remove this item from cart?');"
+           class="text-red-600 hover:text-red-800">
+            🗑
+        </a>
+    </td>
+</tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <div style="text-align:right; margin-top:20px; font-size:18px; font-weight:bold;">
+                Total: ₹{{ total }}
+            </div>
+
+            <div style="text-align:right; margin-top:20px;">
+                <a href="{% url 'checkout' %}">
+                    <button style="padding:10px 20px; background:#DB2777; color:white; border:none; border-radius:8px; cursor:pointer;">
+                        Proceed to Checkout
+                    </button>
+                </a>
+            </div>
+        {% else %}
+            <p>Your cart is empty.</p>
+        {% endif %}
+    </div>
+</div>
+<script src="{% static 'js/ajax.js' %}"></script>
+{% endblock %}

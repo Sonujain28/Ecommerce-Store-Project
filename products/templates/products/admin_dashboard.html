@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <h2>📊 Admin Dashboard</h2>
+
+    <div style="display:flex; gap:20px; flex-wrap:wrap;">
+
+        <div style="padding:20px; background:#ffe6f0; border-radius:10px;">
+            <h3>{{ total_orders }}</h3>
+            <p>Total Orders</p>
+        </div>
+
+        <div style="padding:20px; background:#e6fff2; border-radius:10px;">
+            <h3>₹{{ total_revenue }}</h3>
+            <p>Total Revenue</p>
+        </div>
+
+        <div style="padding:20px; background:#e6f0ff; border-radius:10px;">
+            <h3>{{ total_users }}</h3>
+            <p>Total Users</p>
+        </div>
+
+        <div style="padding:20px; background:#fff5e6; border-radius:10px;">
+            <h3>{{ total_products }}</h3>
+            <p>Total Products</p>
+        </div>
+
+        <div style="padding:20px; background:#f2e6ff; border-radius:10px;">
+            <h3>{{ total_reviews }}</h3>
+            <p>Total Reviews</p>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

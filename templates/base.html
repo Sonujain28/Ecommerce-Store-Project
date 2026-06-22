@@ -1,0 +1,158 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My E-Commerce Store</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+   <!-- Tailwind CSS --> 
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Google Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body class="bg-gradient-to-br from-pink-50 via-white to-rose-50 min-h-screen flex flex-col">
+{% if show_header %}
+<nav class="bg-white shadow px-6 py-4 flex justify-between items-center sticky top-0 z-50">
+
+    <!-- LEFT SIDE (Logo) -->
+    <div>
+        <h1 class="text-2xl font-bold text-pink-600 cursor-pointer">
+            <a href="{% url 'home' %}">My Beauty Store</a>
+        </h1>
+    </div>
+
+    <!-- RIGHT SIDE -->
+    <div class="flex items-center gap-4">
+
+        <!-- Search Bar -->
+<form method="GET" action="{% url 'all_products' %}" 
+      class="flex items-center gap-2 mb-0">
+
+    <input type="text" name="q"
+           placeholder="Search products..."
+           class="w-64 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-pink-400 focus:outline-none">
+
+    <button type="submit"
+            class="bg-pink-600 text-white px-4 py-2 rounded-lg hover:bg-pink-700 transition">
+        Search
+    </button>
+
+</form>
+
+        {% if user.is_authenticated %}
+            <span class="text-gray-700 font-medium">
+                Hello, {{ user.username }}
+            </span>
+
+            <!-- Cart -->
+            <a href="{% url 'cart' %}"
+               class="bg-pink-600 text-white px-4 py-2 rounded-full hover:bg-pink-700 flex items-center gap-1">
+                <span class="material-icons text-sm">shopping_cart</span>
+                Cart
+            </a>
+
+            <!-- Wishlist -->
+            <a href="{% url 'wishlist' %}"
+              class="bg-pink-600 text-white px-4 py-2 rounded-full hover:bg-pink-700 flex items-center gap-1">
+                <span class="material-icons text-sm">favorite</span>
+                Wishlist
+            </a>
+
+            <!-- My Orders -->
+            <a href="{% url 'my_orders' %}"
+              class="bg-pink-600 text-white px-4 py-2 rounded-full hover:bg-pink-700 flex items-center gap-1">
+                <span class="material-icons text-sm">receipt</span>
+                My Orders
+            </a>
+            <form method="POST" action="{% url 'logout' %}">
+    {% csrf_token %}
+    <button type="submit">Logout</button>
+</form>
+
+        {% else %}
+            <a href="{% url 'login' %}" class="text-gray-700 hover:text-pink-600">
+                Login
+            </a>
+            <a href="{% url 'signup' %}"
+               class="bg-pink-500 text-white px-4 py-2 rounded-full hover:bg-pink-600">
+                Sign Up
+            </a>
+        {% endif %}
+
+    </div>
+</nav>
+{% endif %}
+
+<!-- MAIN CONTENT -->
+<main class="flex-1 p-4">
+    <!-- HERO SECTION -->
+
+
+    {% block content %}
+    {% endblock %}
+</main>
+
+<!-- FOOTER -->
+<footer class="bg-white mt-16 border-t border-gray-200 p-8 text-center text-gray-500 text-sm">
+    &copy; {{ now.year }} My Beauty Store. All rights reserved.
+</footer>
+
+<style>
+.chat-product-card {
+    display: flex;
+    gap: 10px;
+    background: #fff;
+    padding: 10px;
+    border-radius: 12px;
+    margin-top: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    align-items: center;
+}
+
+.chat-product-card img {
+    width: 65px;
+    height: 65px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.chat-product-info {
+    flex: 1;
+}
+
+.chat-product-info h6 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.price {
+    color: #e91e63;
+    font-weight: bold;
+    margin-bottom: 6px;
+}
+
+.view-btn {
+    display: inline-block;
+    background: #e91e63;
+    color: white;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.view-btn:hover {
+    background: #c2185b;
+}
+</style>
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{% static 'js/your_ajax_file.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Premium Gift Card</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Great+Vibes&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: linear-gradient(135deg,#ffe0ef,#fff5f9);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Playfair Display', serif;
+            padding: 30px;
+        }
+
+        /* ================= CARD ================= */
+
+        .card {
+            width: 750px;
+            min-height: 480px;
+            background: white;
+            padding: 70px;
+            border-radius: 20px;
+            position: relative;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.12);
+            overflow: hidden;
+        }
+
+        /* Soft floral gradient overlay */
+        .card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at top left, #ffd6eb 0%, transparent 40%),
+                        radial-gradient(circle at bottom right, #ffd6eb 0%, transparent 40%);
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        /* Border */
+        .card::after {
+            content: "";
+            position: absolute;
+            inset: 15px;
+            border: 2px solid #f8c8dc;
+            border-radius: 15px;
+            pointer-events: none;
+        }
+
+        .brand {
+            text-align: center;
+            font-family: 'Great Vibes', cursive;
+            font-size: 64px;
+            color: #d63384;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .divider {
+            width: 80px;
+            height: 2px;
+            background: #f8c8dc;
+            margin: 0 auto 30px;
+        }
+
+        .message {
+            text-align: center;
+            font-size: 20px;
+            color: #555;
+            margin: 40px 0;
+            white-space: pre-line;
+            position: relative;
+            z-index: 2;
+        }
+
+        .names {
+            text-align: center;
+            font-size: 24px;
+            margin-top: 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .names span {
+            font-family: 'Great Vibes', cursive;
+            font-size: 38px;
+            color: #c2185b;
+        }
+
+        /* ================= FORM ================= */
+
+        .form-section {
+            margin-top: 50px;
+            text-align: center;
+            max-width: 750px;
+            width: 100%;
+        }
+
+        input, textarea {
+            padding: 12px;
+            margin: 10px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            width: 90%;
+            max-width: 450px;
+            font-size: 14px;
+        }
+
+        textarea {
+            height: 100px;
+            resize: none;
+        }
+
+        button {
+            padding: 12px 28px;
+            margin-top: 15px;
+            border: none;
+            background: linear-gradient(45deg,#ff4da6,#d63384);
+            color: white;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        /* Print Mode */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            .card, .card * {
+                visibility: visible;
+            }
+            .card {
+                position: absolute;
+                top: 0;
+                left: 50%;
+                transform: translateX(-50%);
+                box-shadow: none;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <div class="brand">With Love💌</div>
+    <div class="divider"></div>
+
+    <div class="message" id="cardMessage">
+        Wishing you love, happiness and beautiful memories.
+    </div>
+
+    <div class="names">
+        To: <span id="toName">Someone Special</span><br><br>
+        From: <span id="fromName">With Love</span>
+    </div>
+</div>
+
+<div class="form-section">
+    <input type="text" id="toInput" placeholder="Recipient Name"><br>
+    <input type="text" id="fromInput" placeholder="Your Name"><br>
+    <textarea id="messageInput" placeholder="Write your heartfelt message here..."></textarea><br>
+
+    <button onclick="updateCard()">Update Card</button>
+    <button onclick="window.print()">Download</button>
+</div>
+
+<script>
+    const toInput = document.getElementById("toInput");
+    const fromInput = document.getElementById("fromInput");
+    const messageInput = document.getElementById("messageInput");
+
+    function updateCard() {
+        if(toInput.value) {
+            document.getElementById("toName").innerText = toInput.value;
+        }
+        if(fromInput.value) {
+            document.getElementById("fromName").innerText = fromInput.value;
+        }
+        if(messageInput.value) {
+            document.getElementById("cardMessage").innerText = messageInput.value;
+        }
+    }
+</script>
+
+</body>
+</html>
